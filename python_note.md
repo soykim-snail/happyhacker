@@ -1,3 +1,5 @@
+1일차
+
 # 00. data type
 
 - print 명령어

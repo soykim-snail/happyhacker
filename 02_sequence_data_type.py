@@ -31,4 +31,5 @@ print(type(single_tuple))
 # 3. range()
 # range는 숫자의 시퀀스를 나타내기 위해 사용
 print(type(range(1)))
-print(list(range(10)))
+print(range(10))  # (0, 10)  .... 0부터 10미만
+print(list(range(10))) # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
