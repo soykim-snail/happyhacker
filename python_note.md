@@ -1,4 +1,4 @@
-1일차
+참고자료: https://docs.python.org/ko/3.7/
 
 # 00. data type
 
@@ -64,11 +64,8 @@
 ## List Comprehension
 
 - 시퀀스의 요소들 전부 또는 일부를 처리하고, 그 결과를 리스트로 돌려주는 간결한 방법
-
 - 즉, 반복을 통해 리스트에 어떠한 것을 담는 경우 한줄로 줄여쓰는 것
-
 - (주의!!) 단순히 반복문을 한 줄로 작성하는 것이 아님
-
 - 특징
 
   1. 간결함
@@ -76,8 +73,62 @@
   2. 성능 (일반화의 위험성 있음)
 
   3. 표현력 (*Pythonic*)
-
 - 리스트컴프리헨션을 남용하지 말자.
 
+---
 
+# Django
+
+version 2.1.15
+
+- Django 패키지 인스톨
+
+  `$ pip install django==2.1.15`
+
+- 프로젝트 만들기
+
+  `$ django-admin startproject <프로젝트 이름>`
+
+- 서버 켜기
+
+  `$ python manage.py runserver`
+
+- 서버 끄기
+
+  `ctrl+c`
+
+- 어플리케이션 만들기
+
+  `$ python manage.py startapp <앱 이름>`
+
+- 환경 세팅 (settings.py)
+
+  ```python
+  INSTALLED_APPS = [ ..로칼앱 추가.., ]
+  LANGUAGE_CODE = 'ko-kr'
+  TIME_ZONE = 'Asia/Seoul'
+  ```
+
+  
+
+- 코딩하기
+  1. urls.py 작성
+  2. view.py 작성
+  3. templates 작성
+
+특징:
+
+trailing comma를 허용한다.
+
+### style convention
+
+\# django import style guides
+
+\# 1. standard library
+
+\# 2. 3rd party library
+
+\# 3. django
+
+\# 4. local django
 
