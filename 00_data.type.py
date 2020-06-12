@@ -37,7 +37,7 @@ name = 'kim'
 # 1. %-formatting  .... 버전 2.+
 print('Hello, %s' % name)
 # 2. .format()
-print('Hello, {}' .format(name))
+print('Hello, {}'.format(name))
 # 3. f-string (Literal String Interpolation) .... 버전 3.6+
 print(f'Hello, {name}')
 
