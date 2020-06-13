@@ -98,6 +98,20 @@ bool
 
 # 05. if statements
 
+```python
+x = int(input("숫자를 입력하세요."))
+if x < 0:
+    print('Negative')
+elif x == 0:
+    print('Zero')
+elif x == 1:
+    print('Single')
+else:
+    print('More')
+```
+
+
+
 # 06. while statments
 
 while 문은 조건식이 참인 경우 반복적으로 코드를 실행한다.
@@ -140,6 +154,31 @@ while 문은 조건식이 참인 경우 반복적으로 코드를 실행한다.
 [x + 7 if x >= 50 else x + 5 for x in range(100)]
 ```
 
+# 10. module Random
+
+모듈 임포트 방법 : 
+
+- `import <모듈이름>`
+- `from <패키지이름> import <모듈이름>`
+
+```python
+import random
+random.choice(['사과', '바나나', '귤', '사과'])
+random.sample(range(100), 3)
+```
+
+유용한 메소드 : `random.choice(<sequence>)`, `random.sample(<sequence>, k)`
+
+# 11. module lotto
+
+정적크롤링 : requests 패키지
+
+# 12. my mask
+
+# 13. function
+
+# 14. my function
+
 
 
 -----
@@ -180,14 +219,12 @@ version 2.1.15
   TIME_ZONE = 'Asia/Seoul'
   ```
 
-  
-
 - MTV 패턴에 따른 코딩하기
   1. urls.py 작성
-  2. view.py 작성
+  2. views.py 작성
   3. templates 작성
 
-장고 특징:
+##### 장고 특징:
 
 trailing comma를 허용한다.
 
@@ -224,7 +261,100 @@ trailing comma를 허용한다.
 #### form에서 중요한 것
 
 1. 데이터를 어디로 보낼지 => action
-2. 어떤 방식으로 보낼지 => metho
+2. 어떤 방식으로 보낼지 => method
 3. 어떤 데이터를 보낼지 => input type
 4. 데이터의 이름은 어떻게 붙일지 => name
 5. 제출 => submit
+
+#### Django Template Language (DTL)
+
+- variable 사용 : `{{ variable }}`
+
+- 반복문, 조건문, 반복조건, 필터 등등
+
+  ```django
+  {% for ... in ... %} 
+  {% empty %}
+  {% endfor %}
+  ```
+  
+
+
+### 프로젝트 만들기 (FIRSTAPP)
+
+#### 관리를 위해서 다음을 적용
+
+1. URL 로직 분리
+   - 두번째 app을 생성할 때….. 하나의 urls.py에서 모든 문서 path를 관리하기 어려워짐.
+   - 프로젝트의 urls를 각 앱으로 분리하자.
+   - 기존 url 이 바뀌어버려서 지금까지 작업한 모든 url을 바꿔줘야 함
+   - 그건 어려우니 그냥 url에 이름을 붙이자.
+2. URL Name : 
+   - `{% urls “<url 이름>” %}`
+   - 그런데,,, 두개의 앱에서 url 이름이 같다면?
+   - 어떤 앱의 url 이름인지 app_name을 설정하자.
+
+3. URL Namespace : 
+
+   `{% urls "app-name:view-name" v1 v2 %}`
+
+4. Django Namespace : 
+
+   장고는 templates를 한곳에 모아두므로 템플릿 파일명이 곂치면 우선순위에 따라 인식한다. 그래서 templates/<앱이름>으로 강제로 경로를 추가한다.
+
+   INSTALLS_APP 에 등록한 순서대로 인식
+
+   > app_name/
+   >
+   > ​	templates/
+   >
+   > ​		**app_name/**
+   >
+   > ​			index.html
+   >
+   > ​			hello.html
+
+5. Django Template Inheritance 적용:
+
+   - 템플릿의 재사용성을 위해 상속을 사용했다.
+
+     프로젝트에 기본 html을 만들고, 나머지는 이것을 상속한다.
+
+     ```django
+     {% extents 'base.html' %}
+     {% block <블록이름> %}내용 오버라이드{% endblock %}
+     ```
+
+     그런데,,
+
+   장고는 기본적으로 template을 app-name/templates 에서 찾는다.  setting에 추가하여 firstapps/templates도 찾을 수 있게 하자.
+
+   ```django
+   TEMPLATES = ... 생략 ...   
+           'DIRS': [os.path.join(BASE_DIR, 'firstapp', 'templates')],
+   ```
+
+6. static
+
+   장고는 기본적으로 static을 app-name/static 에서 찾는다. setting에 추가하여 firstapps/static도 찾을 수 있게 하자.
+
+   (사용방법은 공식문서를 사용하자.) https://docs.djangoproject.com/en/2.1/howto/static-files/ 
+
+   ```django
+   STATICFILES_DIRS = [
+       os.path.join(BASE_DIR, 'firstapp', 'static'),
+   ]
+   ```
+
+   
+
+
+
+
+
+## VScode, markdown 꿀팁
+
+polar code로 사진찍기, github issue에 사진 저장하고 url 받기
+
+단축키들 : `alt + 화살표` , `cntrl + l`
+

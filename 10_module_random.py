@@ -11,7 +11,7 @@ print(pick)
 n = random.sample(range(20), 3)
 print(n)
 
-print(dir(random))
+# print(dir(random))
 # ['BPF', 'LOG4', 'NV_MAGICCONST', 'RECIP_BPF', 
 # 'Random', 'SG_MAGICCONST', 'SystemRandom', 
 # 'TWOPI', '_BuiltinMethodType', '_MethodType', 
@@ -22,4 +22,15 @@ print(dir(random))
 # '_inst', '_itertools', '_log', '_os', '_pi', 
 # '_random', '_sha512', '_sin', '_sqrt', '_test', 
 # '_test_generator', '_urandom', '_warn', 
-# 'betavariate', 'choice', 'choices', 'expovariate', 'gammavariate', 'gauss', 'getrandbits', 'getstate', 'lognormvariate', 'normalvariate', 'paretovariate', 'randint', 'random', 'randrange', 'sample', 'seed', 'setstate', 'shuffle', 'triangular', 'uniform', 'vonmisesvariate', 'weibullvariate']
+# 'betavariate', 'choice', 'choices', 'expovariate', 
+# 'gammavariate', 'gauss', 'getrandbits', 'getstate', 
+# 'lognormvariate', 'normalvariate', 'paretovariate', 
+# 'randint', 'random', 'randrange', 'sample', 'seed', 
+# 'setstate', 'shuffle', 'triangular', 'uniform', 
+# 'vonmisesvariate', 'weibullvariate']
+
+fruits = ['포도', '사과', '귤', '바나나', '파인애플', '자두', '수박']
+fruit = random.choice(fruits)
+print(fruit)
+fruit_box = random.sample(fruits, 3)
+print(fruit_box)
