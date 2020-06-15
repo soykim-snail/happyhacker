@@ -169,7 +169,7 @@ random.sample(range(100), 3)
 
 유용한 메소드 : `random.choice(<sequence>)`, `random.sample(<sequence>, k)`
 
-# 11. module lotto
+# 11. module requests
 
 정적크롤링 : requests 패키지
 
@@ -199,14 +199,6 @@ version 2.1.15
 
   `$ django-admin startproject <프로젝트 이름>`
 
-- 서버 켜기
-
-  `$ python manage.py runserver`
-
-- 서버 끄기
-
-  `ctrl+c`
-
 - 어플리케이션 만들기
 
   `$ python manage.py startapp <앱 이름>`
@@ -218,6 +210,12 @@ version 2.1.15
   LANGUAGE_CODE = 'ko-kr'
   TIME_ZONE = 'Asia/Seoul'
   ```
+
+- 서버 켜기
+
+  `$ python manage.py runserver`  ( 서버 끄기 : `ctrl+c` )
+
+- 브라우저에서 로켓 확인하기
 
 - MTV 패턴에 따른 코딩하기
   1. urls.py 작성
@@ -356,5 +354,218 @@ trailing comma를 허용한다.
 
 polar code로 사진찍기, github issue에 사진 저장하고 url 받기
 
-단축키들 : `alt + 화살표` , `cntrl + l`
+단축키들 : `alt + 화살표` , `cntrl + l` 
+
+콘솔 단축키 : `cntrl + l` (화면 지우기)
+
+
+
+
+
+# ORM (Object Relational Mapping)
+
+- OOP 프로그래밍에서 RDBMS를 연동할 때, 데이터베이스와 OOP 프로그래밍 언어간에 호환되지 않는 데이터를 변환하는 프로그래밍 기법
+
+![image](https://user-images.githubusercontent.com/58576911/84608322-deb2dc00-aeec-11ea-82e4-e32a132245a6.png)
+
+## 장점
+
+- SQL을 몰라도 코딩 가능함. 생산성 좋다
+
+## 단점
+
+- 완벽하게 대체는 불가능
+
+---
+
+# Python 클래스
+
+### 클래스
+
+- 클래스란 객체를 표현하기 위한 문법.
+
+### 인스턴스
+
+- 메모리상에 할당된다.
+- 고유의 속성(attribute)를 가지며 클래스에서 정의한 행위(behavior)를 수행할 수 있다. 
+- 인스턴스의 행위는 클래스에 정의된 행위에 대한 메서드를 공유함으로써 메모리를 절약할 수 있음
+
+### 속성(attribute)
+
+- 클래스/인스턴스가 가지고 있는 속성(값)
+
+### 메서드(method)
+
+- 클래스/인스턴스가 할 수 있는 행위(함수)
+
+### self
+
+- 인스턴스 자기자신. 
+- 메소드 정의할 때 반드시 첫번째 인자는 self
+
+---
+
+### Django Models
+
+1. `CharField()`
+   - 길이의 제한이 있는 문자열을 만들 때
+   - 
+2. `TextField()`
+   - 길이의 제한이 없는 문자열을 만들 때
+
+3. `DateTimeField()`
+
+   `models.dateTimeField( … …. )`
+
+   `auto_now_add = True`
+
+   `auto_now = True`
+
+## Model 작성 3단계
+
+1. models.py 작성
+
+   models.py 에 원하는 데이터 스키마를 클래스로 작성한다.	
+
+```python
+class Article(models.Model):
+    title = models.CharField(max_length=20)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)  # 데이터베이스의 최초 생성일
+    updated_at = models.DateTimeField(auto_now=True) # 데이터 최신 수정일
+```
+
+
+
+2. migrations (설계도 작성)
+
+```
+$ python manage.py makemigrations
+```
+
+​	migrations이 ORM에 의해서 어떻게 sql 문으로 해석되어 동작할 지 미리 확인할 수 있다.
+
+```
+python manage.py sqlmigrate <앱이름> <마이그레이션 넘버>
+```
+
+
+
+3. migrate (DB 작성 및 구축)
+
+```
+$ python manage.py migrate
+```
+
+
+
+python 콘솔 사용하기
+
+- ipython 인스톨 하고 `pip install ipython`, `ipython` 실행하자.
+
+- 장고에서 ipython을 실행하자 ..
+
+  ```python
+  python manage.py shell
+  ```
+
+  
+
+
+
+### objects
+
+- models.py에 작성한 클래스를 불러와서 사용할 때 DB와의 인터페이스 역할을 하는 매니저
+
+## Query Set
+
+- objects 매니저를 사용하여 복수의 데이터를 가져오는 함수를 사용할 때 반환되는 객체 타입
+- 단일 객체는 Query (class의 인스턴스로 반환)
+- query를 DB에게 보내서 CRUD 한다. 
+
+---
+
+# Django ORM CRUD
+
+## CREATE
+
+```python
+# 1
+article = Article()
+article.title = 'first'
+article.content = 'django!
+article.save()
+
+# 2
+article = Article(title='second', content='django')
+article.save()
+
+# 3
+Article.objects.create(title='third', contend='django!')
+```
+
+## READ
+
+```python
+# 모든 객체 조회
+Article.objects.all()
+
+# 특정 객체 조회
+Article.objects.get(pk=1)
+
+# 특정 조건 객체 가져오기
+Article.objects.filter(title='first')
+Article.objects.filter(title='first', content='django!')
+
+# 내림차순
+Article.objects.order_by('-pk')
+
+# LIKE
+Article.objects.filter(title__contains='fi')   
+Article.objects.filter(title__startswith='fi')
+Article.objects.filter(content__endswith='!')
+```
+
+- `.get()`을 사용할 때 해당 객체가 없으면 `DoesNotExist` 에러가 발생하고, 여러 개일 때 `MultipleObjectReturned` 에러가 발생함. ==> 이와 같은 특징 때문에 pk 사용한다.
+- 읽어온 결과는 `Article` 객체 또는  `QuerySet` 로 저장된다. 
+
+```shell
+# Article 객체
+In [8]: Article.objects.get(pk=2)
+Out[8]: <Article: Article object (2)>
+
+# QuerySet
+In [9]: Article.objects.filter(my_title__startswith="tt", my_content__endswith="d")
+Out[9]: <QuerySet [<Article: Article object (1)>, <Article: Article object (2)>]>
+```
+
+
+
+
+
+## UPDATE
+
+```python
+article = Article.objects.get(pk=1) # 선택하고
+article.title = 'edit title' # 업데이트 한 후
+article.save() # 저장
+```
+
+## DELETE
+
+```python
+article = Article.objects.get(pk=1) # 선택하고
+article.delete() # 삭제
+```
+
+---
+
+# 관리자 기능 사용하기
+
+계정 또한 데이터이기 때문에 반드시 migrate 작업 후에 관리자 계정을 생성해야 한다.
+
+## admin 작성 순서
+
+1. `python manage.py createsuperuser`
+2. `admin.py` 작성
 

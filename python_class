@@ -1,0 +1,95 @@
+class Dog:
+
+    kind = 'canine' # 클래스 변수
+
+    def __init__(self, name): # 생성자
+        self.name = name # 인스턴스 변수
+
+
+my_dog = Dog('mm')
+your_dog = Dog('uu')
+
+# 클래스 변수 출력
+print(Dog.kind)  # canine
+print(my_dog.kind)  # canine
+print(your_dog.kind)  # canine
+
+# 인스턴스 변수 출력
+print(my_dog.name)
+print(your_dog.name)
+
+############################################################
+class Dog:
+
+    tricks = []             # mistaken use of a class variable
+
+    def __init__(self, name):
+        self.name = name
+
+
+    def add_trick(self, trick):
+        self.tricks.append(trick)
+
+my_dog = Dog("mm")
+your_dog = Dog("uu")
+
+my_dog.add_trick('hello')
+your_dog.add_trick('bye-bye')
+print(my_dog.tricks) # ['hello', 'bye-bye']
+print(your_dog.tricks) # ['hello', 'bye-bye']
+
+#########################################
+class Dog:
+
+    # tricks = []             # mistaken use of a class variable
+
+    def __init__(self, name):
+        self.name = name
+        self.tricks = []    # 인스턴스 변수로 옮긴다. 
+
+    def add_trick(self, trick):
+        self.tricks.append(trick)
+
+my_dog = Dog("mm")
+your_dog = Dog("uu")
+
+my_dog.add_trick('hello')
+your_dog.add_trick('bye-bye')
+print(my_dog.tricks) # ['hello']
+print(your_dog.tricks) # ['bye-bye']
+
+###########################
+
+
+# print(help(str))
+print(help(str.capitalize))
+
+variable = 'apple'
+# 단축형
+print(variable.capitalize())
+# 클래스에서 메소드 호출 ... instance method를 정의할 때 self 사용하는 이유가 이것
+print(str.capitalize(variable))
+
+
+# 절차 지향 VS. 객체 지향
+
+# 절차 지향
+# 함수에 데이터를 넣는다.
+def greeting(name):
+    return f'hello, {name}'
+
+print(greeting('harry'))
+
+
+# 객체 지향
+# 데이터가 함수를 호출한다.
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def greeting(self):
+        return f'hello, {self.name}'
+
+my_var = Person('harry')
+
+print(my_var.greeting())
